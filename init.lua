@@ -276,6 +276,22 @@ require('lazy').setup({
     },
   },
 
+  {
+    'windwp/nvim-ts-autotag',
+    event = 'InsertEnter',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require('nvim-ts-autotag').setup()
+    end,
+  },
+
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = function()
+      require('nvim-autopairs').setup {}
+    end,
+  },
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
   -- This is often very useful to both group configuration, as well as handle
