@@ -89,7 +89,24 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+vim.opt.termguicolors = true
+vim.opt.background = 'dark'
 
+-- Make background transparent always
+vim.api.nvim_create_autocmd('ColorScheme', {
+  pattern = '*',
+  callback = function()
+    vim.cmd [[
+      hi Normal guibg=NONE ctermbg=NONE
+      hi NormalNC guibg=NONE ctermbg=NONE
+      hi SignColumn guibg=NONE ctermbg=NONE
+      hi EndOfBuffer guibg=NONE ctermbg=NONE
+      hi NormalFloat guibg=NONE
+      hi FloatNormal guibg=NONE
+      hi Pmenu guibg=NONE
+    ]]
+  end,
+})
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = false
 
@@ -278,6 +295,11 @@ require('lazy').setup({
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+
+  {
+    'mfussenegger/nvim-jdtls',
+    ft = { 'java' },
   },
   {
     'windwp/nvim-ts-autotag',
@@ -973,24 +995,14 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'catppuccin/nvim',
+    'shaunsingh/nord.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
       ---@diagnostic disable-next-line: missing-fields
-      require('catppuccin').setup {
-        flavour = 'mocha',
-        --  styles = {
-        -- comments = { italic = false }, -- Disable italics in comments
-        -- },
-        background = { -- :h background
-          dark = 'mocha',
-        },
-      }
-
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'catppuccin'
+      vim.cmd.colorscheme 'nord'
     end,
   },
 
@@ -1040,7 +1052,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'java' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'java', 'javascript' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
